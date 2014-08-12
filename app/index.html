@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="format-detection" content="telephone=no" />
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" type="text/css" href="styles/kendo.mobile.all.min.css" />
+		
+		<title>Alpha Calendar</title>
+		
+		<script src="cordova.js"></script>
+		<script src="scripts/jquery.min.js"></script>
+		<script src="scripts/kendo.mobile.min.js"></script>
+
+        <!-- Config -->
+        <script src="scripts/config.js"></script>
+        
+        <!-- Libs -->
+        <script src="scripts/moment-with-langs.min.js"></script>
+        <script src="scripts/sha.js"></script>
+		<script src="scripts/fastclick.js"></script>
+		<script src="scripts/calendar.js"></script>
+        
+        <!-- Models -->
+        <script src="models/events.js"></script>
+        
+        <!-- View Models -->
+        <script src="viewmodels/account/login.js"></script>
+        <script src="viewmodels/account/register.js"></script>
+        
+        <!-- Runtime -->
+        <script src="scripts/app.js"></script>
+	</head>
+	<body id="app">
+		<div id="default-view"
+			data-role="view"
+			data-title="Home">
+			<div class="view-content">
+			</div>
+		</div>
+		
+		<!-- Default Layout -->
+		<div data-role="layout" data-id="default-layout">
+			<!--Header-->
+			<div data-role="header">
+				<div data-role="navbar">
+					<a data-role="backbutton" data-align="left"></a>
+					<span data-role="view-title"></span>
+				</div>
+			</div>
+			<footer data-role="footer">
+				<div data-role="tabstrip">
+					<a href="#views/calendar/day.html"><span class="icon icon-today"></span>Day</a>
+					<a href="#views/calendar/month.html"><span class="icon icon-calendar"></span> Month</a>
+					<a href="#views/groups/list.html"><span class="icon icon-groups"></span>Groups</a>
+					<a href="#views/invites/invite.html"><span class="icon icon-invites"></span>Invite</a>
+					<a href="#views/settings/settings.html"><span class="icon icon-settings"></span>Settings</a>
+				</div>
+			</footer>
+		</div>
+		
+		<!-- Save Layout -->
+		<div data-role="layout" data-id="save-layout">
+			<!--Header-->
+			<div data-role="header">
+				<div data-role="navbar">
+					<a data-role="backbutton" data-align="left">Cancel</a>
+					<span data-role="view-title"></span>
+					<a data-role="backbutton" data-align="right">Save</a>
+				</div>
+			</div>
+			<footer data-role="footer">
+				<div data-role="tabstrip">
+					<a href="#views/calendar/day.html"><span class="icon icon-today"></span>Day</a>
+					<a href="#views/calendar/month.html"><span class="icon icon-calendar"></span> Month</a>
+					<a href="#views/groups/list.html"><span class="icon icon-groups"></span>Groups</a>
+					<a href="#views/invites/invite.html"><span class="icon icon-invites"></span>Invite</a>
+					<a href="#views/settings/settings.html"><span class="icon icon-settings"></span>Settings</a>
+				</div>
+			</footer>
+		</div>
+		
+		<!-- Invite Layout -->
+		<div data-role="layout" data-id="invite-layout">
+			<!--Header-->
+			<div data-role="header">
+				<div data-role="navbar">
+					<a data-role="backbutton" data-align="left"><span class="icon icon-back"></span></a>
+					<span data-role="view-title"></span>
+					<a class="nav-button text" data-align="right"  href="#views/invites/invite.html" data-role="button">
+					<span class="icon icon-invites block" style="margin:-5px 0 0px 0; font-size:1.5em!important;"></span>Invite</a>
+				</div>
+				<div class="groupName">
+					Marketing Dept
+				</div>	
+			</div>
+			<footer data-role="footer">
+				<div data-role="tabstrip">
+					<a href="#views/calendar/day.html"><span class="icon icon-today"></span>Day</a>
+					<a href="#views/calendar/month.html"><span class="icon icon-calendar"></span> Month</a>
+					<a href="#views/groups/list.html"><span class="icon icon-groups"></span>Groups</a>
+					<a href="#views/invites/invite.html"><span class="icon icon-invites"></span>Invite</a>
+					<a href="#views/settings/settings.html"><span class="icon icon-settings"></span>Settings</a>
+				</div>
+			</footer>
+		</div>	
+		
+		<!-- Invite Layout -->
+		<div data-role="layout" data-id="no-header-layout">
+			<!--Header-->
+			<div data-role="header">
+			</div>
+			<footer data-role="footer">
+				<div data-role="tabstrip">
+					<a href="#views/calendar/day.html"><span class="icon icon-today"></span>Day</a>
+					<a href="#views/calendar/month.html"><span class="icon icon-calendar"></span> Month</a>
+					<a href="#views/groups/list.html"><span class="icon icon-groups"></span>Groups</a>
+					<a href="#views/invites/invite.html"><span class="icon icon-invites"></span>Invite</a>
+					<a href="#views/settings/settings.html"><span class="icon icon-settings"></span>Settings</a>
+				</div>
+			</footer>
+		</div>		
+			
+	</body>
+</html>
