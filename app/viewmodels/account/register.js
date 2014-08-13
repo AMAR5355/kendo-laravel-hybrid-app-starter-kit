@@ -31,12 +31,12 @@
                     attrs.dataType
                 );
                 req.done(function(resp) {
-                    app.application.hideLoading();
 
                     app.accountRegisterService.viewModel.set('errors', resp.messages);
                     if (!resp.success) {
+                        app.application.hideLoading();
                         for (var key in resp.messages) {
-                           var viewNode = $('#accounts-register-view');
+                            var viewNode = $('#accounts-register-view');
                             var elem = viewNode.find('[data-bind*="' + key + '"]');
                             var scroller = viewNode.getKendoMobileView().scroller;
                             scroller.scrollTo(0, -1 * elem.position().top);
@@ -48,10 +48,7 @@
                     }
 
                     //-- Log In User
-                    
-                    // app.session.loggedIn = true;
-                    // app.saveSession();
-                    //app.application.navigate('views/calendar/day.html');
+                    app.accountLoginService.viewModel.login(attrs.data.email, attrs.data.password);
                 });
             }
         });

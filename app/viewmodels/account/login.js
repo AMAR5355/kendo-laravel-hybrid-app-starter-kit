@@ -51,28 +51,25 @@
     			//-- Loader
                 //app.application.changeLoadingMessage('Attempting to log you in...');
     			app.application.showLoading();
-    			//-- Hash the pass
-    			password_sha = new jsSHA(password);
-    			password_hashed = password_sha.getHash('SHA-256', 'HEX');				
     		
     			var attrs, req;
     			attrs = {
     				'data': {
-    					'auth_users_email': email,
-    					'auth_users_password': password
+    					'username': email,
+    					'password': password
     				},
     				'dataType': 'json'
     			};
                 
     			req = $.post(
-    				app.remoteHostSSL + '/api/users/login', 
+    				app.remoteHostSSL + '/api/user/login', 
     				attrs.data,
                     null,
                     attrs.dataType
     			);
     			req.done(app.setToken).done(function(resp) {
     				app.application.hideLoading();
-    				if (resp.success) {
+    				if (resp.token) {
                         app.session.loggedIn = true;
                         that.loggedIn = true;
                         app.saveSession();
