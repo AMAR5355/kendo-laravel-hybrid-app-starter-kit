@@ -14,6 +14,7 @@ class RegisterController extends \BaseController {
 		];
 		$validator = \Validator::make($data, $requirements);
 		if (!$validator->fails()) {
+			$data['username'] = $data['email'];
 			$user = \User::create($data);
 			return \Response::json(['success' => true]);
 		} else {
