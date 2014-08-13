@@ -3,3 +3,4 @@ laravel.log
 api\app\storage
 ._*
 *.sqlite
+api/app/database/development.sqlite
