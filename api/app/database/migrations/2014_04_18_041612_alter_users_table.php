@@ -18,8 +18,10 @@ class AlterUsersTable extends Migration {
 		    $table->string('first_name', 20);
 		    $table->string('last_name', 20);
 		    $table->string('email', 255)->unique();
+		    $table->string('username', 255)->unique();
             $table->string('remember_token', 100)->nullable();
 		    $table->string('password', 64);
+		    $table->boolean('active')->default(true);
 		    $table->timestamps();
             //-- Custom Column Name
             $table->date('dob')->default('0000-00-00');
