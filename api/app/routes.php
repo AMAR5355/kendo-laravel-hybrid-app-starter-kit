@@ -11,20 +11,18 @@
 |
 */
 
-// Controller-less route
-Route::get('/', function()
-{
-	return View::make('hello');
-});
-
+//------------------------------------------------------------------------------
+//-- Web API Routes
+//------------------------------------------------------------------------------
 // JSON Web Token
 Route::get('auth', 'Tappleby\AuthToken\AuthTokenController@index');
-Route::post('auth', 'Tappleby\AuthToken\AuthTokenController@store');
-Route::delete('auth', 'Tappleby\AuthToken\AuthTokenController@destroy');
-
 
 //-- Register
 Route::post('api/user/register', 'Api\User\RegisterController@postRegister');
+
+//-- Login
+Route::post('api/user/login', 'Tappleby\AuthToken\AuthTokenController@store');
+Route::delete('api/user/logout', 'Tappleby\AuthToken\AuthTokenController@destroy');
 
 Route::group(array('prefix' => 'api', 'before' => 'auth.token'), function() {
 	Route::get('/', function() {
@@ -32,6 +30,14 @@ Route::group(array('prefix' => 'api', 'before' => 'auth.token'), function() {
 	});
 }); 
 
+//------------------------------------------------------------------------------
+//-- Website Routes
+//------------------------------------------------------------------------------
+// Controller-less route
+Route::get('/', function()
+{
+	return View::make('hello');
+});
 //-- Register
 Route::get('register', 'User\RegisterController@showRegister');
 Route::post('register', 'User\RegisterController@doRegister');
@@ -69,5 +75,5 @@ Event::listen('auth.token.valid', function($user)
 Event::listen('auth.token.created', function($user, $token)
 {
 	// echo 'auth.token.created';
-	$user->load('relation1', 'relation2');
+	// $user->load('relation1', 'relation2');
 });
