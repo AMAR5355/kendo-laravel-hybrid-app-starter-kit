@@ -28,7 +28,7 @@ class AlterGroupsTable extends Migration {
 	 */
 	public function down()
 	{
-        $table->drop('groups');
+		Schema::drop('groups');
 	}
 
 }

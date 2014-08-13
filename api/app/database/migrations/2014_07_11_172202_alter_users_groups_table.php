@@ -36,8 +36,10 @@ class AlterUsersGroupsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('users_groups');
-        $table->dropForeign('user_id_foreign');
-        $table->dropForeign('group_id_foreign');
+		Schema::table('users_groups', function(Blueprint $table) {
+	        $table->dropForeign('user_id_foreign');
+	        $table->dropForeign('group_id_foreign');
+			Schema::drop('users_groups');
+	    });
 	}
 }
