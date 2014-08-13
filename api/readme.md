@@ -1,6 +1,6 @@
-# Alpha Calendar
+# Laravel Rest API
 
-Alpha Calendar is a group calendar system.
+Starter kit to let you focus on real work not boiler plate
 
 ## Install
 
@@ -11,7 +11,6 @@ Ubuntu 14.04
 Everything Else
 
 	composer update
-	php artisan migrate --package=cartalyst/sentry
 	php artisan migrate --package=tappleby/laravel-auth-token
 	php artisan migrate
 
