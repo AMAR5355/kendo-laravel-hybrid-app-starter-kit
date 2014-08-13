@@ -2,3 +2,4 @@ api\vendor
 laravel.log
 api\app\storage
 ._*
+*.sqlite
