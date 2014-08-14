@@ -7,7 +7,7 @@
 		var defer = $.Deferred();
 		if (resp.authenticated === false) {
 			app.alert("Login Required", resp.error);
-			app.application.navigate("views/account/login.html");
+			app.application.navigate(app.pages.loggedOut);
 			defer.reject(resp);
 		} else {
 			defer.resolve(resp);
@@ -22,7 +22,7 @@
 				e.preventDefault();
 			}
 			if (app.application != null && app.application.navigate != null) {
-				app.application.navigate("views/account/login.html");
+				app.application.navigate(app.pages.loggedOut);
 			}
 			return false;
 		} else {
@@ -123,13 +123,13 @@
 	};
 	
 	app.getInitialView = function () {
-		var initial = 'views/account/login.html';
+		var initial = app.pages.loggedOut;
 		if (app.isLoggedIn()) {
 			var view = document.location.hash.replace(/#/, '');
 			if ($.trim(view).length > 0) {
 				initial = view
 			} else {
-				initial = 'views/calendar/day.html';
+				initial = app.pages.loggedIn;
 			}
 		}
 		
@@ -138,7 +138,7 @@
 
 	$(document).ajaxError(function (event, jqxhr) {
 		if (jqxhr && jqxhr.status === 401) {
-			window.location = '#views/account/login.html';
+			window.location = '#' + app.pages.loggedOut;
 		}
 	});
 
