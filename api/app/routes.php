@@ -14,14 +14,13 @@
 //------------------------------------------------------------------------------
 //-- Web API Routes
 //------------------------------------------------------------------------------
-// JSON Web Token
+// Is Logged In?
 Route::get('auth', 'Tappleby\AuthToken\AuthTokenController@index');
-
 //-- Register
 Route::post('api/user/register', 'Api\User\RegisterController@postRegister');
-
 //-- Login
 Route::post('api/user/login', 'Tappleby\AuthToken\AuthTokenController@store');
+//-- Logout
 Route::delete('api/user/logout', 'Tappleby\AuthToken\AuthTokenController@destroy');
 
 Route::group(array('prefix' => 'api', 'before' => 'auth.token'), function() {

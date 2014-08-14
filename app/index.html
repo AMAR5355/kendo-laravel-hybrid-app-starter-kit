@@ -51,13 +51,29 @@
 			</div>
 			<footer data-role="footer">
 				<div data-role="tabstrip">
-					<a href="#views/calendar/day.html"><span class="icon icon-today"></span>Day</a>
-					<a href="#views/calendar/month.html"><span class="icon icon-calendar"></span> Month</a>
-					<a href="#views/groups/list.html"><span class="icon icon-groups"></span>Groups</a>
-					<a href="#views/invites/invite.html"><span class="icon icon-invites"></span>Invite</a>
-					<a href="#" data-click="app.logOut"><span class="icon icon-settings"></span>Logout</a>
+					<a href="#views/welcome.html" data-icon="home">Home</a>
+					<a href="#views/account/logout.html" data-icon="action">Logout</a>
 				</div>
 			</footer>
+		</div>
+		
+		<!-- Header Only Layout -->
+		<div data-role="layout" data-id="footless-layout">
+			<!--Header-->
+			<div data-role="header">
+				<div data-role="navbar">
+					<a data-role="backbutton" data-align="left"></a>
+					<span data-role="view-title"></span>
+				</div>
+			</div>
+			<footer data-role="footer"></footer>
+		</div>
+		
+		<!-- No Header or Footer Layout -->
+		<div data-role="layout" data-id="navless-layout">
+			<!--Header-->
+			<div data-role="header"></div>
+			<footer data-role="footer"></footer>
 		</div>
 	</body>
 </html>

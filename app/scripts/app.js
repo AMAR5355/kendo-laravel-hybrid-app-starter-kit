@@ -45,12 +45,16 @@
 		var defer = $.Deferred();
 		app.session = {};
 		app.saveSession();
-		$.get(app.remoteHost + '/api/users/logout.php', {}, null, 'json')
-			.done(app.setToken)
-			.done(function() {
-				app.accountLoginService.viewModel.set('isLoggedIn', false);
-				defer.resolve()
-			});
+		$.ajax({
+			type: 'DELETE',
+			dataType: 'json',
+			url: app.remoteHost + '/api/user/logout'
+		})
+		.done(app.setToken)
+		.done(function() {
+			app.accountLoginService.viewModel.set('isLoggedIn', false);
+			defer.resolve()
+		});
 
 		return defer.promise();
 	};
@@ -194,7 +198,7 @@
 			dataType: 'json',
 			url: app.remoteHost + '/auth'
 		}).always(function (data, textStatus, errorThrown) {
-			console.log(data, textStatus, errorThrown);
+			// console.log(data, textStatus, errorThrown);
 			var initial = app.getInitialView();
 			
 			app.application = new kendo.mobile.Application(document.body, {

@@ -1,8 +1,9 @@
 (function (global) {
-    var LoginViewModel,
+    var Model,
+        service,
         app = global.app = global.app || {};
 
-    LoginViewModel = function () {
+    Model = function () {
         return kendo.observable({
             isLoggedIn: false,
             email: "",
@@ -75,7 +76,7 @@
                         app.saveSession();
                         
                         // go to request
-                        app.application.navigate('views/calendar/day.html');
+                        app.application.navigate(app.pages.loggedIn);
     				} else {
                         app.alert("Login failed", "Invalid email or password entered.");
     				}
@@ -103,19 +104,15 @@
     	});
     };
 
-    app.accountLoginService = {
-        auth: function (e) {
+    service = app.accountLoginService = {
+        beforeShow: function (e) {
+            console.dir(e);
             if (app.isLoggedIn()) {
-                app.application.navigate('views/calendar/day.html');
                 e.preventDefault();
+                app.application.navigate(app.pages.loggedIn);
             }
         },
         show: function (e) {
-            if (app.isLoggedIn()) {
-                app.application.navigate('views/calendar/day.html');
-                return;
-            }
-            var service = app.accountLoginService;
             var viewModel = service.viewModel;
             
             if (app.session.loggedIn) {
@@ -124,6 +121,6 @@
                 viewModel.set('isLoggedIn', false);
             }
         },
-        viewModel: new LoginViewModel()
+        viewModel: new Model()
     };
 })(window);

@@ -1,5 +1,6 @@
 (function (global) {
     var Model,
+    	service,
         app = global.app = global.app || {};
 
     Model = function () {
@@ -7,7 +8,7 @@
         });
     };
 
-    var service = {
+    service = app.welcomeService = {
         init: function (e) {
         	console.log('init', e);
             var viewModel = service.viewModel;
@@ -17,6 +18,8 @@
         },
         beforeShow: function (e) {
         	console.log('beforeShow', e);
+        	//-- Protect View
+        	return app.isLoggedIn(e);
         },
         beforeHide: function (e) {
         	console.log('beforeHide', e);
@@ -42,6 +45,4 @@
         },
         viewModel: new Model()
     };
-
-    app.welcomeService = service;
 })(window);

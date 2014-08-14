@@ -1,10 +1,9 @@
 (function (global) {
-    var AccountRegisterModel,
-        app = global.app = global.app || {},
-        NEW_GROUP = 'new',
-        EXISTING_GROUP = 'existing';
+    var Model,
+        service,
+        app = global.app = global.app || {};
 
-    AccountRegisterModel = function () {
+    Model = function () {
         return kendo.observable({
             email: "",
             password: "",
@@ -54,32 +53,27 @@
         });
     };
 
-    app.accountRegisterService = {
+    service = app.accountRegisterService = {
         init: function (e) {
-            var service = app.accountRegisterService;
             var viewModel = service.viewModel;
             $(function() {
                 FastClick.attach(e.view.container[0]);
             });
         },
+        beforeShow: function (e) {
+            console.dir(e);
+            if (app.isLoggedIn()) {
+                console.log(124);
+                e.preventDefault();
+                app.application.navigate(app.pages.loggedIn);
+            }
+        },
         show: function (e) {
-            var service = app.accountRegisterService;
             var viewModel = service.viewModel;
-            // viewModel.refreshOrders();
-
-            //app.application.showLoading();
-            //$.get(app.remoteHost + '/api/members/orders/view', {
-            //    shop_orders_id: e.view.params.id,
-            //    shop_orders_transaction_id: e.view.params.trans,
-            //}, null, 'json').done(app.setToken).done(app.isAuth).done(function (resp) {
-            //    viewModel.set('order', resp.order);
-            //});
         },
         hide: function (e) {
-            var service = app.accountRegisterService;
             var viewModel = service.viewModel;
-            // e.view.find('.view-content').empty();
         },
-        viewModel: new AccountRegisterModel()
+        viewModel: new Model()
     };
 })(window);

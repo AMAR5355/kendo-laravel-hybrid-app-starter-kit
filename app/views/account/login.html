@@ -1,10 +1,10 @@
-<div id="accounts-login-view" class="login-view login-bg"
+<div id="accounts-login-view"
+	class="login-view login-bg"
 	data-role="view"
+	data-layout="navless-layout"
 	data-model="app.accountLoginService.viewModel"
-	data-before-show="app.accountLoginService.auth"
+	data-before-show="app.accountLoginService.beforeShow"
 	data-show="app.accountLoginService.show">
-	<div data-role="header"></div>
-	<header data-role="header"></header>
 	<h1>Application Title</h1>
 	<form class="login-form">
 		<ul data-role="listview" data-style="inset">
@@ -41,6 +41,4 @@
 	    </style>
 		
 	</form>
-	
-	<footer data-role="footer" class="login-footer"></footer>
 </div>
