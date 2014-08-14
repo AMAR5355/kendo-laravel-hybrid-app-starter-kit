@@ -8,6 +8,6 @@
     app.timeFormat = "HH:mm";
     app.pages = {
     	loggedOut: 'views/account/login.html',
-    	loggedIn: 'views/calendar/day.html'
+    	loggedIn: 'views/welcome.html'
     };
 })(window);
