@@ -41,10 +41,8 @@
 		return defer.promise();
 	};
 
-	app.logOut = function () {
+	app.logOut = function (redirect) {
 		var defer = $.Deferred();
-		app.session = {};
-		app.saveSession();
 		$.ajax({
 			type: 'DELETE',
 			dataType: 'json',
@@ -52,8 +50,12 @@
 		})
 		.done(app.setToken)
 		.done(function() {
-			app.accountLoginService.viewModel.set('isLoggedIn', false);
-			defer.resolve()
+			app.session = {};
+			app.saveSession();
+			if (redirect != null) {
+				app.application.navigate(redirect);
+			}
+			defer.resolve();
 		});
 
 		return defer.promise();
