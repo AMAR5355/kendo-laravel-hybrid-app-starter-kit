@@ -24,7 +24,7 @@ For more information about the App please go to the [README](app/README.md) in t
 
 This is the back-end service to the single page application. This handles the login, registration and forgot password features as well as other features you decide to include. This is written in PHP using Laravel as the framework. 
 
-For more information about the API please go to the [README](api/README.md) in that folder.
+For more information about the API please go to the [README](api/readme.md) in that folder.
 
 ## Requirements ##
 
