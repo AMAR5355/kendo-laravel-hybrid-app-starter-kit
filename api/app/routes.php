@@ -22,6 +22,31 @@ Route::post('api/user/register', 'Api\User\RegisterController@postRegister');
 Route::post('api/user/login', 'Tappleby\AuthToken\AuthTokenController@store');
 //-- Logout
 Route::delete('api/user/logout', 'Tappleby\AuthToken\AuthTokenController@destroy');
+//-- Forgot Password
+//-- TODO: This needs to be in its controller not here
+Route::post('api/user/forgot-password', function () {
+	$response = Password::remind(Input::only('email'), function($message)
+	{
+	    $message->subject('Password Reminder');
+	});
+
+	switch ($response) {
+		case Password::REMINDER_SENT:
+			$success = true;
+			break;
+		case Password::INVALID_USER:
+			$success = false;
+			break;
+	}
+
+	if ($success) {
+		$message = 'Please check your email for a reset link';
+	} else {
+		$message = 'No account found matching this email';
+	}
+
+	return Response::json(['success' => $success, 'message' => $message]);
+});
 
 Route::group(array('prefix' => 'api', 'before' => 'auth.token'), function() {
 	Route::get('/', function() {
@@ -48,12 +73,20 @@ Route::post('login', 'User\LoginController@doLogin');
 //-- Logout
 Route::get('logout', 'User\LogoutController@doLogout');
 
+//-- Remind Password
+Route::get('remind', 'RemindersController@getRemind');
+Route::post('remind', 'RemindersController@postRemind');
+
+//-- Reset Password
+Route::get('password/reset/{token}', 'RemindersController@getReset');
+Route::post('password/reset', 'RemindersController@postReset');
+
 //-- Contact Us
 Route::group(array('prefix' => 'contact-us'), function()
 {
-		Route::get('/', 'ContactController@index');
-		Route::post('/', 'ContactController@process');
-		Route::get('/thank-you', 'ContactController@thankYou');
+	Route::get('/', 'ContactController@index');
+	Route::post('/', 'ContactController@process');
+	Route::get('/thank-you', 'ContactController@thankYou');
 });
 
 Route::resource('contacts', 'ContactsController');

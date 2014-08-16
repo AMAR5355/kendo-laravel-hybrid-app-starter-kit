@@ -55,8 +55,9 @@ class RemindersController extends Controller {
 
 		$response = Password::reset($credentials, function($user, $password)
 		{
-			$user->password = Hash::make($password);
-
+			//-- Hashing is done in the modal
+			// $user->password = Hash::make($password);
+			$user->password = $password;
 			$user->save();
 		});
 
