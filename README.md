@@ -6,7 +6,7 @@ Includes the following:
 
 - Registration
 - Login
-- Forgot Password (Incomplete)
+- Forgot Password - Emails confirmation link + reset
 - Single Page Application using **Kendo UI Mobile**
 - JWT - Json Web Tokens, a scalable, secure session storage
 - CORS - Cross-origin resource sharing - for local / remote development
@@ -32,7 +32,7 @@ You only need PHP 5.4+ and Composer. Other tools like mysql, apache, etc is not 
 
 ## PHP on Windows ##
 
-Download the [PHP 5.5.x](http://windows.php.net/downloads/releases/php-5.5.15-nts-Win32-VC11-x86.zip) *VC11 x86 Non Thread Safe* is fine. Unzip PHP somewhere you can get too. If you want add that folder to your environment PATH variable. 
+Download the [PHP 5.5.x](http://windows.php.net/downloads/releases/php-5.5.15-nts-Win32-VC11-x86.zip) *VC11 x86 Non Thread Safe* is fine. Unzip PHP somewhere you can get too. Don't worry about adding PHP to your environment PATH variable, as the Composer installer will add it for you. 
 
 ## Composer on Windows ##
 
@@ -45,14 +45,14 @@ You can download a sample for windows from a gist: [php.ini](https://gist.github
 1. Rename `php.ini-developlemt` to `php.ini`
 2. Setup extensions directory, uncomment `extension_dir`
 
-       ; Directory in which the loadable extensions (modules) reside.
-	   ; http://php.net/extension-dir
-	   ; extension_dir = "./"
-	   ; On windows:
-	    extension_dir = "ext"
+        ; Directory in which the loadable extensions (modules) reside.
+	    ; http://php.net/extension-dir
+	    ; extension_dir = "./"
+	    ; On windows:
+	     extension_dir = "ext"
 3. Enable the following:
 
-	   extension=php_curl.dll       ; for composer
-	   extension=php_openssl.dll    ; for composer
-	   extension=php_pdo_sqlite.dll ; for web api
-	   extension=php_sqlite3.dll    ; for web api
+	    extension=php_curl.dll       ; for composer
+	    extension=php_openssl.dll    ; for composer
+	    extension=php_pdo_sqlite.dll ; for web api
+	    extension=php_sqlite3.dll    ; for web api
