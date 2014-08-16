@@ -106,7 +106,6 @@
 
     service = app.accountLoginService = {
         beforeShow: function (e) {
-            console.dir(e);
             if (app.isLoggedIn()) {
                 e.preventDefault();
                 app.application.navigate(app.pages.loggedIn);
