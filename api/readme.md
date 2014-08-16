@@ -14,6 +14,12 @@ Everything Else
 	php artisan migrate --package=tappleby/laravel-auth-token
 	php artisan migrate
 
+## Run
+
+This will run as [http://localhost:8000/](http://localhost:8000/)
+
+	php artisan serve
+
 ## Remigrate Everything
 
 	php artisan migrate:reset
