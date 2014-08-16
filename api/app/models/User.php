@@ -2,10 +2,11 @@
 
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
+use Illuminate\Auth\Reminders\RemindableTrait;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
 	use RemindableTrait;
-	
+
 	/**
 	 * The database table used by the model.
 	 *
