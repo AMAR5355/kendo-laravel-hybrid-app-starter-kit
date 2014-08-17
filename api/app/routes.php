@@ -14,44 +14,25 @@
 //------------------------------------------------------------------------------
 //-- Web API Routes
 //------------------------------------------------------------------------------
-// Is Logged In?
+//-- Unprotected Routes --------------------------------------------------------
+//-- Is Logged In?
 Route::get('auth', 'Tappleby\AuthToken\AuthTokenController@index');
 //-- Register
-Route::post('api/user/register', 'Api\User\RegisterController@postRegister');
+Route::post('api/user/register', 'Api\UserController@register');
 //-- Login
 Route::post('api/user/login', 'Tappleby\AuthToken\AuthTokenController@store');
 //-- Logout
 Route::delete('api/user/logout', 'Tappleby\AuthToken\AuthTokenController@destroy');
 //-- Forgot Password
-//-- TODO: This needs to be in its controller not here
-Route::post('api/user/forgot-password', function () {
-	$response = Password::remind(Input::only('email'), function($message)
-	{
-	    $message->subject('Password Reminder');
-	});
+Route::post('api/user/forgot-password', 'Api\UserController@forgotPassword');
 
-	switch ($response) {
-		case Password::REMINDER_SENT:
-			$success = true;
-			break;
-		case Password::INVALID_USER:
-			$success = false;
-			break;
-	}
-
-	if ($success) {
-		$message = 'Please check your email for a reset link';
-	} else {
-		$message = 'No account found matching this email';
-	}
-
-	return Response::json(['success' => $success, 'message' => $message]);
-});
-
+//-- Protected Routes ----------------------------------------------------------
 Route::group(array('prefix' => 'api', 'before' => 'auth.token'), function() {
 	Route::get('/', function() {
 		return "Protected resource";
 	});
+
+	//-- Other protexted routes here...
 }); 
 
 //------------------------------------------------------------------------------
