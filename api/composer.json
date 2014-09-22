@@ -3,14 +3,17 @@
 	"description": "The Laravel Framework.",
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
-	"dead": {
-		"cartalyst/sentry": "2.1.*"
-	},
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/dennisoderwald/laravel-auth-token"
+        }
+    ],
 	"require": {
 		"laravel/framework": "4.2.*",
 		"mmanos/laravel-casset": "dev-master",
         "barryvdh/laravel-debugbar": "1.*",
-        "tappleby/laravel-auth-token": "0.3.*",
+        "tappleby/laravel-auth-token": "dev-feature/multiple-sessions",
 		"barryvdh/laravel-cors": "0.2.x"
 	},
 	"autoload": {

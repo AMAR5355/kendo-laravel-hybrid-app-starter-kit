@@ -144,7 +144,9 @@
 
 	$(document).ajaxError(function (event, jqxhr) {
 		if (jqxhr && jqxhr.status === 401) {
-			window.location = '#' + app.pages.loggedOut;
+			app.session = {};
+			app.saveSession();
+			app.application.navigate(app.pages.loggedOut);
 		}
 	});
 

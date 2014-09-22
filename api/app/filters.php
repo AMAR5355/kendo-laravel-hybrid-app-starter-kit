@@ -14,6 +14,7 @@
 App::before(function($request)
 {
 	//
+	Log::info('before', func_get_args());
 });
 
 
@@ -42,7 +43,6 @@ Route::filter('auth', function()
 	if (!Auth::check()) {
 		return Redirect::to('/login');
 	}
-	// if (!Sentry::check()) return Redirect::guest('login');
 });
 
 
@@ -84,4 +84,21 @@ Route::filter('csrf', function()
 	{
 		throw new Illuminate\Session\TokenMismatchException;
 	}
+});
+
+
+Event::listen('auth.token.valid', function($user)
+{
+	// echo 'auth.token.valid';
+	//Token is valid, set the user on auth system.
+	Log::error('auth.token.valid');
+	Log::error($user);
+	Auth::setUser($user);
+});
+
+Event::listen('auth.token.created', function($user, $token)
+{
+	// echo 'auth.token.created';
+	// $user->load('relation1', 'relation2');
+	Log::error('auth.token.created');
 });

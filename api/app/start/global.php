@@ -48,6 +48,11 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 
 App::error(function(Exception $exception, $code)
 {
+	$accept = Request::header('Accept');
+	if ($exception->getMessage() === 'Not Authorized' && (stristr($accept, 'javascript') || stristr($accept, 'json'))) {
+	    return Response::json(array('error' => $exception->getMessage()), $exception->getCode());
+	}
+
 	Log::error($exception);
 });
 

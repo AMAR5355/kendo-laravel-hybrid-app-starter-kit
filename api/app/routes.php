@@ -14,7 +14,7 @@
 //------------------------------------------------------------------------------
 //-- Web API Routes
 //------------------------------------------------------------------------------
-//-- Unprotected Routes --------------------------------------------------------
+//-- Unprotected API Routes --------------------------------------------------------
 //-- Is Logged In?
 Route::get('auth', 'Tappleby\AuthToken\AuthTokenController@index');
 //-- Register
@@ -33,7 +33,45 @@ Route::group(array('prefix' => 'api', 'before' => 'auth.token'), function() {
 	});
 
 	//-- Other protexted routes here...
-}); 
+
+	//-- JWT Examples
+	Route::get('/jwt', function() {
+		$authToken = AuthToken::create(Auth::user());
+		$publicToken = AuthToken::publicToken($authToken);
+
+		$test = Session::get('test');
+
+		$userData = array_merge(
+		  Auth::user()->toArray(),
+		  array('auth_token' => $publicToken)
+		);
+
+		return Response::json([
+			'userData' => $userData, 
+			'token' => $publicToken, 
+			'test' => $test,
+			'authToken' => $authToken->toArray()
+		]);
+	});
+	Route::post('/jwt', function() {
+		$authToken = AuthToken::create(Auth::user());
+		$publicToken = AuthToken::publicToken($authToken);
+
+		$test = Session::put('test', '23');
+
+		$userData = array_merge(
+		  Auth::user()->toArray(),
+		  array('auth_token' => $publicToken)
+		);
+
+		return Response::json([
+			// 'userData' => $userData, 
+			'token' => $publicToken,
+			'test' => $test,
+			// 'authToken' => $authToken->toArray()
+		]);
+	});
+});
 
 //------------------------------------------------------------------------------
 //-- Website Routes
@@ -76,17 +114,4 @@ Route::resource('contacts', 'ContactsController');
 Route::group(array('prefix' => 'user', 'before' => 'auth'), function()
 {
 		Route::get('dashboard', 'User\DashboardController@showDashboard');
-});
-
-Event::listen('auth.token.valid', function($user)
-{
-	// echo 'auth.token.valid';
-	//Token is valid, set the user on auth system.
-	Auth::setUser($user);
-});
-
-Event::listen('auth.token.created', function($user, $token)
-{
-	// echo 'auth.token.created';
-	// $user->load('relation1', 'relation2');
 });
