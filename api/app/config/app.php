@@ -79,7 +79,8 @@ return array(
 	*/
 
 	'key' => 'c3cPd2QpiiOVqBJIbur0ZOUHsRllZFGz',
-
+	'cipher' => MCRYPT_RIJNDAEL_256,
+	
 	/*
 	|--------------------------------------------------------------------------
 	| Autoloaded Service Providers
@@ -122,7 +123,6 @@ return array(
 		'Way\Generators\GeneratorsServiceProvider',
         'Mmanos\Casset\CassetServiceProvider',
         'Barryvdh\Debugbar\ServiceProvider',
-        'Tappleby\AuthToken\AuthTokenServiceProvider',
         'Barryvdh\Cors\CorsServiceProvider',
 	),
 
