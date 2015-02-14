@@ -11,7 +11,6 @@ Ubuntu 14.04
 Everything Else
 
 	composer update
-	php artisan migrate --package=tappleby/laravel-auth-token
 	php artisan migrate
 
 ## Run
