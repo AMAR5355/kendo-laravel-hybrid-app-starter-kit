@@ -7,6 +7,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/dennisoderwald/laravel-auth-token"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/DubFriend/php-jwt"
         }
     ],
     "require": {
@@ -14,17 +18,21 @@
         "mmanos/laravel-casset": "dev-master",
         "barryvdh/laravel-debugbar": "1.*",
         "barryvdh/laravel-cors": "0.2.x",
-        "tappleby/laravel-auth-token": "dev-feature/multiple-sessions"
+        "firebase/php-jwt": "dev-big-int"
     },
     "autoload": {
         "classmap": [
             "app/commands",
             "app/controllers",
             "app/models",
+            "app/lib",
             "app/database/migrations",
             "app/database/seeds",
             "app/tests/TestCase.php"
-        ]
+        ],
+        "psr-0": {
+            "Comentum": "app/lib"
+        }
     },
     "scripts": {
         "post-install-cmd": [

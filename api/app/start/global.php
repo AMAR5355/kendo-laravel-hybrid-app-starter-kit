@@ -50,7 +50,21 @@ App::error(function(Exception $exception, $code)
 {
 	$accept = Request::header('Accept');
 	if ($exception->getMessage() === 'Not Authorized' && (stristr($accept, 'javascript') || stristr($accept, 'json'))) {
-	    return Response::json(array('error' => $exception->getMessage()), $exception->getCode());
+		return Response::json([
+				'error' => $exception->getMessage()
+			], $exception->getCode());
+	} else if (stristr($accept, 'javascript') || stristr($accept, 'json')) {
+		$data = ['error' => $exception->getMessage()];
+		$data['traceback'] = $exception->getTrace();
+		if(Auth::check()) {
+			$token = App::make('user\Contracts\Token', [
+				'token' => $token->encode()
+			]);
+			$data['token'] = $publicToken;
+		}
+		Log::error($exception);
+		return Response::json($data, 500);
+
 	}
 
 	Log::error($exception);

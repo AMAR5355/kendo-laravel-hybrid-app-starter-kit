@@ -14,62 +14,26 @@
 //------------------------------------------------------------------------------
 //-- Web API Routes
 //------------------------------------------------------------------------------
-//-- Unprotected API Routes --------------------------------------------------------
-//-- Is Logged In?
-Route::get('auth', 'Tappleby\AuthToken\AuthTokenController@index');
-//-- Register
-Route::post('api/user/register', 'Api\UserController@register');
-//-- Login
-Route::post('api/user/login', 'Tappleby\AuthToken\AuthTokenController@store');
-//-- Logout
-Route::delete('api/user/logout', 'Tappleby\AuthToken\AuthTokenController@destroy');
-//-- Forgot Password
-Route::post('api/user/forgot-password', 'Api\UserController@forgotPassword');
+Route::group(array('prefix' => 'api/v1'), function() {
+	//-- Token Management
+	Route::get('token/authorize', 'TokenController@authorized');
+	Route::match(['GET', 'POST'], 'token/generate', 'TokenController@generate');
 
-//-- Protected Routes ----------------------------------------------------------
-Route::group(array('prefix' => 'api', 'before' => 'auth.token'), function() {
-	Route::get('/', function() {
-		return "Protected resource";
+	//-- Tokenized Routes ----------------------------------------------------------
+	Route::group(['after' => 'auth.token.injection'], function (Illuminate\Routing\Router $router) {
+		Route::post('user/register', 'Api\UserController@register');
+		//-- Login
+		Route::post('user/login', 'Api\UserController@login');
+		//-- Logout
+		Route::delete('user/logout', 'Api\UserController@logout');
+		//-- Forgot Password
+		Route::post('user/forgot-password', 'Api\UserController@forgotPassword');
 	});
 
-	//-- Other protexted routes here...
-
-	//-- JWT Examples
-	Route::get('/jwt', function() {
-		$authToken = AuthToken::create(Auth::user());
-		$publicToken = AuthToken::publicToken($authToken);
-
-		$test = Session::get('test');
-
-		$userData = array_merge(
-		  Auth::user()->toArray(),
-		  array('auth_token' => $publicToken)
-		);
-
-		return Response::json([
-			'userData' => $userData, 
-			'token' => $publicToken, 
-			'test' => $test,
-			'authToken' => $authToken->toArray()
-		]);
-	});
-	Route::post('/jwt', function() {
-		$authToken = AuthToken::create(Auth::user());
-		$publicToken = AuthToken::publicToken($authToken);
-
-		$test = Session::put('test', '23');
-
-		$userData = array_merge(
-		  Auth::user()->toArray(),
-		  array('auth_token' => $publicToken)
-		);
-
-		return Response::json([
-			// 'userData' => $userData, 
-			'token' => $publicToken,
-			'test' => $test,
-			// 'authToken' => $authToken->toArray()
-		]);
+	//-- Protected Routes ----------------------------------------------------------
+	Route::group(['before' => 'auth', 'after' => 'auth.token.injection'], function (Illuminate\Routing\Router $router) {
+		Route::get('me', 'Api\UserController@getDetailed');
+		Route::post('me/contacts', 'Api\UserContactController@addContact');
 	});
 });
 
