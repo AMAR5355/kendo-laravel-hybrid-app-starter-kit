@@ -124,6 +124,7 @@ return array(
         'Mmanos\Casset\CassetServiceProvider',
         'Barryvdh\Debugbar\ServiceProvider',
         'Barryvdh\Cors\CorsServiceProvider',
+        'Comentum\Providers\JsonWebTokenServiceProvider',
 	),
 
 	/*
@@ -155,11 +156,9 @@ return array(
 		'App'             => 'Illuminate\Support\Facades\App',
 		'Artisan'         => 'Illuminate\Support\Facades\Artisan',
 		'Auth'            => 'Illuminate\Support\Facades\Auth',
-		'AuthToken'       => 'Tappleby\Support\Facades\AuthToken',
-		'AuthTokenNotAuthorizedException' => 'Tappleby\AuthToken\Exceptions\NotAuthorizedException',
 		'Blade'           => 'Illuminate\Support\Facades\Blade',
 		'Cache'           => 'Illuminate\Support\Facades\Cache',
-        'Casset'          => 'Mmanos\Casset\Casset',
+        'Casset'          => 'Mmanos\Casset\Facades\Casset',
 		'ClassLoader'     => 'Illuminate\Support\ClassLoader',
 		'Config'          => 'Illuminate\Support\Facades\Config',
 		'Controller'      => 'Illuminate\Routing\Controller',
