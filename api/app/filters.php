@@ -37,12 +37,44 @@ App::after(function($request, $response)
 Route::filter('auth', function()
 {
 	if(Auth::check()) {
-		$authToken = AuthToken::create(Auth::user());
-		$publicToken = AuthToken::publicToken($authToken);
+		// $authToken = AuthToken::create(Auth::user());
+		// $publicToken = AuthToken::publicToken($authToken);
 	}
 	if (!Auth::check()) {
 		return Redirect::to('/login');
 	}
+});
+
+Route::filter('auth.token', function()
+{
+	$token = App::make('user\Contracts\Token', [
+		'token' => Input::get('token', Request::header('X-Token'))
+	]);
+
+	$user = $token->getUser();
+	
+	if(!$user) {
+		return Response::json([
+			'error_code' => 1,
+			'error' => 'Not Authorized'
+		], 401);
+	}
+	else {
+		Auth::setUser($user);	
+	}
+});
+
+Route::filter('auth.token.injection', function(Routing_Route $route, Http_Request $request, Http_JsonResponse $response)
+{
+	$token = App::make('user\Contracts\Token');
+
+	//-- Merge existing data with new data with token
+	$data = $response->getData(true);
+	$data = array_merge($data, [
+		'token' => $token->encode()
+	]);
+
+	$response->setData($data);
 });
 
 

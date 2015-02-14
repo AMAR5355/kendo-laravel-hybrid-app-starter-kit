@@ -14,6 +14,10 @@ class AlterUsersTable extends Migration {
 	{
 		Schema::create('users', function (Blueprint $table)
         {
+			if (Config::get('database.default') === 'mysql') {
+				$table->engine = "InnoDB";
+			}
+			
 		    $table->increments('id');
 		    $table->string('first_name', 20);
 		    $table->string('last_name', 20);
@@ -21,10 +25,9 @@ class AlterUsersTable extends Migration {
 		    $table->string('username', 255)->unique();
             $table->string('remember_token', 100)->nullable();
 		    $table->string('password', 64);
+            $table->date('dob')->default('0000-00-00');
 		    $table->boolean('active')->default(true);
 		    $table->timestamps();
-            //-- Custom Column Name
-            $table->date('dob')->default('0000-00-00');
         });
 	}
 
@@ -37,7 +40,6 @@ class AlterUsersTable extends Migration {
 	{
         Schema::table('users', function ($table)
         {
-            //-- Custom Column Name
             Schema::drop('users');
         });
 	}
