@@ -55,6 +55,10 @@ App::error(function(Exception $exception, $code)
 			], $exception->getCode());
 	} else if (stristr($accept, 'javascript') || stristr($accept, 'json')) {
 		$data = ['error' => $exception->getMessage()];
+		$data['file'] = $exception->getFile();
+		$data['line'] = $exception->getLine();
+		$data['previous'] = $exception->getPrevious();
+		$data['code'] = $exception->getCode();
 		$data['traceback'] = $exception->getTrace();
 		if(Auth::check()) {
 			$token = App::make('user\Contracts\Token');

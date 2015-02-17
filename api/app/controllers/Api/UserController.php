@@ -4,28 +4,34 @@ namespace Api;
 use Input;
 use Auth;
 use Response;
-use user\User;
+use User;
 use RegisterModel;
 
 class UserController extends \BaseController {
 	function register() {
-		$resp = RegisterModel::register(Input::all());
+		$result = User::createNewUser(Input::all());
 
-		if ($resp['success'] === true) {
-			Auth::setUser($resp['user']);
+		$response = [];
+		if ($result->isSuccessful()) {
+			Auth::setUser($result->user);
+			$response['success'] = true;
+			$response['user'] = $result->user;
+		} else {
+			$response['success'] = false;
+			$response['messages'] = $result->getMessages();
 		}
 
-		return Response::json($resp);
+		return Response::json($response);
 	}
 
 	function login() {
 		$email = Input::get('email');
 		$password = Input::get('password');
-		$resp = ['success' => false, 'message' => null];
+		$response = ['success' => false, 'message' => null];
 
 		if (Auth::attempt(array('email' => $email, 'password' => $password))) {
-			$resp['success'] = true;
-			$resp['message'] = '';
+			$response['success'] = true;
+			$response['message'] = '';
 
 			$user = Auth::getUser();
 
@@ -34,11 +40,11 @@ class UserController extends \BaseController {
 			$token->setUserId($user->id);
 		}
 		else {
-			$resp['success'] = false;
-			$resp['message'] = 'Invalid email or password';
+			$response['success'] = false;
+			$response['message'] = 'Invalid email or password';
 		}
 
-		return Response::json($resp);
+		return Response::json($response);
 	}
 
 	function forgotPassword() {
@@ -60,5 +66,10 @@ class UserController extends \BaseController {
 		}
 
 		return Response::json(['success' => $success, 'message' => $message]);
+	}
+
+	function user() {
+		$user = Auth::getUser();
+		return Response::json(['user' => $user]);
 	}
 }

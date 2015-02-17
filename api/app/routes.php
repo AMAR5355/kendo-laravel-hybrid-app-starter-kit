@@ -21,19 +21,22 @@ Route::group(array('prefix' => 'api/v1'), function() {
 
 	//-- Tokenized Routes ----------------------------------------------------------
 	Route::group(['after' => 'auth.token.injection'], function (Illuminate\Routing\Router $router) {
-		Route::post('user/register', 'Api\UserController@register');
-		//-- Login
-		Route::post('user/login', 'Api\UserController@login');
-		//-- Logout
-		Route::delete('user/logout', 'Api\UserController@logout');
-		//-- Forgot Password
-		Route::post('user/forgot-password', 'Api\UserController@forgotPassword');
+		Route::group(['prefix' => 'user', 'namespace' => 'Api'], function () {
+			Route::post('register', 'UserController@register');
+			//-- Login
+			Route::post('login', 'UserController@login');
+			//-- Logout
+			Route::delete('logout', 'UserController@logout');
+			//-- Forgot Password
+			Route::post('forgot-password', 'UserController@forgotPassword');
+		});
 	});
 
 	//-- Protected Routes ----------------------------------------------------------
-	Route::group(['before' => 'auth', 'after' => 'auth.token.injection'], function (Illuminate\Routing\Router $router) {
-		Route::get('me', 'Api\UserController@getDetailed');
-		Route::post('me/contacts', 'Api\UserContactController@addContact');
+	Route::group(['before' => 'auth.token', 'after' => 'auth.token.injection'], function (Illuminate\Routing\Router $router) {
+		Route::group(['prefix' => 'user', 'namespace' => 'Api'], function () {
+			Route::get('user', 'UserController@user');
+		});
 	});
 });
 
