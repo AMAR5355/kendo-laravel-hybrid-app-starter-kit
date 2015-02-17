@@ -57,10 +57,8 @@ App::error(function(Exception $exception, $code)
 		$data = ['error' => $exception->getMessage()];
 		$data['traceback'] = $exception->getTrace();
 		if(Auth::check()) {
-			$token = App::make('user\Contracts\Token', [
-				'token' => $token->encode()
-			]);
-			$data['token'] = $publicToken;
+			$token = App::make('user\Contracts\Token');
+			$data['token'] = $token->encode();
 		}
 		Log::error($exception);
 		return Response::json($data, 500);

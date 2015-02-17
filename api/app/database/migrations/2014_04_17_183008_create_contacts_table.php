@@ -13,6 +13,9 @@ class CreateContactsTable extends Migration {
 	public function up()
 	{
 		Schema::create('contacts', function(Blueprint $table) {
+			if (Config::get('database.default') === 'mysql') {
+				$table->engine = "InnoDB";
+			}
 			$table->increments('id');
 			$table->string('first_name');
 			$table->string('last_name');

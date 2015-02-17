@@ -6,6 +6,8 @@ namespace User;
  * Date: 4/18/14
  * Time: 3:55 AM
  */
+use Auth;
+use User;
 class LoginController extends \BaseController
 {
     /**
@@ -51,15 +53,6 @@ class LoginController extends \BaseController
     }
 
     /**
-     * Log the registered user in and redirect to the dashboard.
-     * @param \Cartalyst\Sentry\Users\Eloquent\User $user
-     * @return type
-     */
-    public function loginUser(\Cartalyst\Sentry\Users\Eloquent\User $user) {
-        return \Redirect::to('/user/dashboard');
-    }
-
-    /**
      * Login a user
      * @return \Illuminate\Support\Facades\Redirect
      */
@@ -68,8 +61,9 @@ class LoginController extends \BaseController
         if ($valid === true) {
             $data = $this->getAllowedInput();
             $remember_me = !empty($data['remember_me']);
+            unset($data['remember_me']);
             if (Auth::attempt($data, $remember_me)) {
-                return $this->loginUser($user, $remember_me);
+                return \Redirect::to('/user/dashboard');
             } else {
                 return \Redirect::to('/login')->withErrors(\Session::get('errors'))->withInput();
             }

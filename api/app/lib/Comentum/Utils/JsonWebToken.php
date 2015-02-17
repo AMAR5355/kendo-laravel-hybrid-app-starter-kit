@@ -1,7 +1,7 @@
 <?php
 namespace Comentum\Utils;
 
-use user\User;
+use User;
 use Device;
 use Config;
 use Site;
