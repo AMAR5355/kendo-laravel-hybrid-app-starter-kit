@@ -1,4 +1,7 @@
 <?php
+use Illuminate\Routing\Route as Routing_Route;
+use Illuminate\Http\Request as Http_Request;
+use Illuminate\Http\JsonResponse as Http_JsonResponse;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,7 +51,7 @@ Route::filter('auth', function()
 Route::filter('auth.token', function()
 {
 	$token = App::make('user\Contracts\Token', [
-		'token' => Input::get('token', Request::header('X-Token'))
+		'token' => Request::header('X-Token', Input::get('token'))
 	]);
 
 	$user = $token->getUser();
